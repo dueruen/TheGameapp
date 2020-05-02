@@ -1,26 +1,27 @@
-package com.example.thegameapp.ui.profile;
+package com.example.thegameapp.ui.viewModels;
 
 import android.app.Application;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.example.thegameapp.entities.User;
 import com.example.thegameapp.repositories.UserRepository;
 
-public class ProfileViewModel extends AndroidViewModel {
+public class UserViewModel extends AndroidViewModel {
 
     private UserRepository userRepository;
     private LiveData<User> currentUser;
 
-    public ProfileViewModel(@NonNull Application application) {
+    public UserViewModel(@NonNull Application application) {
         super(application);
         userRepository = new UserRepository(application);
         currentUser = userRepository.getUser();
     }
+
+    public void insert(User user) { userRepository.insert(user);}
 
     public void update(User user) {
         userRepository.update(user);
