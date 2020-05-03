@@ -1,4 +1,4 @@
-package com.example.thegameapp.ui.favorites;
+package com.example.thegameapp.favorites;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,29 +12,27 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thegameapp.R;
-import com.example.thegameapp.entities.FavoritEntity;
+import com.example.thegameapp.favorites.entities.FavoriteEntity;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.GameHolder> {
+public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.FavoritesHolder> {
 
-    private List<FavoritEntity> favorites = new ArrayList<>();
+    private List<FavoriteEntity> favorites = new ArrayList<>();
 
     @NonNull
     @Override
-    public GameHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public FavoritesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.game_item, parent, false);
-        return new GameHolder(itemView);
+        return new FavoritesHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull GameHolder holder, int position) {
-        FavoritEntity current = favorites.get(position);
+    public void onBindViewHolder(@NonNull FavoritesHolder holder, int position) {
+        FavoriteEntity current = favorites.get(position);
         holder.textViewTitle.setText(current.getTitle());
         holder.textViewScore.setText(String.valueOf(current.getScore()));
 
@@ -55,17 +53,17 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Game
         return favorites.size();
     }
 
-    public void setFavorites(List<FavoritEntity> list) {
+    public void setFavorites(List<FavoriteEntity> list) {
         this.favorites = list;
         notifyDataSetChanged();
     }
 
-    class GameHolder extends RecyclerView.ViewHolder {
+    class FavoritesHolder extends RecyclerView.ViewHolder {
         private TextView textViewTitle;
         private TextView textViewScore;
         private ImageView imageView;
 
-        public GameHolder(@NonNull View itemView) {
+        public FavoritesHolder(@NonNull View itemView) {
             super(itemView);
             textViewTitle = itemView.findViewById(R.id.game_title);
             textViewScore = itemView.findViewById(R.id.game_score);

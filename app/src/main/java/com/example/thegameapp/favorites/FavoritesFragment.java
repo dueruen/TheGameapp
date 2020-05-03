@@ -1,14 +1,11 @@
-package com.example.thegameapp.ui.favorites;
+package com.example.thegameapp.favorites;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -16,12 +13,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thegameapp.R;
-import com.example.thegameapp.entities.User;
-import com.example.thegameapp.ui.viewModels.UserViewModel;
+import com.example.thegameapp.favorites.entities.FavoriteEntity;
+
+import java.util.List;
 
 public class FavoritesFragment extends Fragment {
 
-    private UserViewModel userViewModel;
+    private FavoritesViewModel favoritesViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -35,19 +33,13 @@ public class FavoritesFragment extends Fragment {
         final FavoritesAdapter adapter = new FavoritesAdapter();
         recyclerView.setAdapter(adapter);
 
-        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-        userViewModel.getUser().observe(this, new Observer<User>() {
+        favoritesViewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
+        favoritesViewModel.getFavorites().observe(this, new Observer<List<FavoriteEntity>>() {
             @Override
-            public void onChanged(User user) {
-                //if (user != null) {
-                //    EditText nameView = root.findViewById(R.id.pro_name);
-                //    nameView.setText(user.getName());
-                //}
-                adapter.setFavorites(user.getFavorits());
+            public void onChanged(List<FavoriteEntity> favoriteEntities) {
+                adapter.setFavorites(favoriteEntities);
             }
         });
-
-
         return root;
     }
 }

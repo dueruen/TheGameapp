@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.thegameapp.ui.home.HomeFragment"
+        android:name="com.example.thegameapp.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home">
 
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/nav_home_second"
-        android:name="com.example.thegameapp.ui.home.HomeSecondFragment"
+        android:name="com.example.thegameapp.home.HomeSecondFragment"
         android:label="@string/home_second"
         tools:layout="@layout/fragment_home_second">
         <action
@@ -30,20 +30,8 @@
     </fragment>
 
     <fragment
-        android:id="@+id/nav_profile"
-        android:name="com.example.thegameapp.ui.profile.ProfileFragment"
-        android:label="@string/menu_profile"
-        tools:layout="@layout/fragment_profile" />
-
-    <fragment
         android:id="@+id/nav_favorites"
-        android:name="com.example.thegameapp.ui.favorites.FavoritesFragment"
+        android:name="com.example.thegameapp.favorites.FavoritesFragment"
         android:label="@string/menu_favorites"
         tools:layout="@layout/fragment_favorites" />
-
-    <fragment
-        android:id="@+id/nav_login"
-        android:name="com.example.thegameapp.ui.login.LoginFragment"
-        android:label="@string/menu_login"
-        tools:layout="@layout/fragment_login" />
 </navigation>

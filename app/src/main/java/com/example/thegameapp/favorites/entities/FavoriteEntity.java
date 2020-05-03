@@ -1,17 +1,17 @@
-package com.example.thegameapp.entities;
+package com.example.thegameapp.favorites.entities;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "favoritentity_table")
-public class FavoritEntity {
+@Entity(tableName = "favorite_table")
+public class FavoriteEntity {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String title;
     private int score;
     private String image;
 
-    public FavoritEntity(String title, int score, String image) {
+    public FavoriteEntity(String title, int score, String image) {
         this.title = title;
         this.score = score;
         this.image = image;
