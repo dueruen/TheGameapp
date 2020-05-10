@@ -5,6 +5,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 
+import com.example.thegameapp.api.Game;
+import com.example.thegameapp.api.GameService;
+import com.example.thegameapp.api.Result;
+import com.example.thegameapp.api.RetrofitClient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
@@ -16,6 +20,10 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import java.io.IOException;
+
+import retrofit2.Call;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,4 +69,5 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
 }
