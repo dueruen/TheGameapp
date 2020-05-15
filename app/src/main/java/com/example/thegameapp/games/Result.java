@@ -1,4 +1,4 @@
-package com.example.thegameapp.api;
+package com.example.thegameapp.games;
 
 import com.google.gson.annotations.SerializedName;
 

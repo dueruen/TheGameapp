@@ -1,4 +1,4 @@
-package com.example.thegameapp.api;
+package com.example.thegameapp.games;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

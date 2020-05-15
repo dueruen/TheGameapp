@@ -1,4 +1,4 @@
-package com.example.thegameapp.api;
+package com.example.thegameapp.games;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
