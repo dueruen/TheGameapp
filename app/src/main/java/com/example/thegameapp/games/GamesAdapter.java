@@ -2,6 +2,7 @@ package com.example.thegameapp.games;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +12,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.thegameapp.R;
 
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,13 +39,7 @@ public class GamesAdapter extends RecyclerView.Adapter<com.example.thegameapp.ga
         holder.textViewTitle.setText(current.getTitle());
         holder.textViewScore.setText(String.valueOf(current.getScore()));
 
-        try {
-            URL url = new URL(current.getImageURL());
-            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            holder.imageView.setImageBitmap(bmp);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Glide.with(holder.imageView).load(current.getImageURL()).into(holder.imageView);
     }
 
     @Override

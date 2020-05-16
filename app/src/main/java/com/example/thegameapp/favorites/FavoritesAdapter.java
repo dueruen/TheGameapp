@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.thegameapp.R;
 import com.example.thegameapp.favorites.entities.FavoriteEntity;
 
@@ -36,13 +37,14 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         holder.textViewTitle.setText(current.getTitle());
         holder.textViewScore.setText(String.valueOf(current.getScore()));
 
-        try {
-            URL url = new URL(current.getImage());
-            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            holder.imageView.setImageBitmap(bmp);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        Glide.with(holder.imageView).load(current.getImage()).into(holder.imageView);
+//        try {
+//            URL url = new URL(current.getImage());
+//            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+//            holder.imageView.setImageBitmap(bmp);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     @Override

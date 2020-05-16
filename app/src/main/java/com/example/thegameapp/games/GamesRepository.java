@@ -15,18 +15,18 @@ import retrofit2.Call;
 public class GamesRepository {
     private LiveData<List<Game>> games;
     private GameService api;
-    private String[] gamesToFetch = new String[] { "Portal 2", "Warcraft III: Reign of Chaos", "The Stanley Parable"};
+    private String[] gamesToFetch = new String[] { "Warcraft III: Reign of Chaos", "Jazzpunk"};
     private List<String> fetchList;
 
     public GamesRepository() {
         api = RetrofitClient.getInstance().create(GameService.class);
         fetchList = Arrays.asList(gamesToFetch);
+        games =  new MutableLiveData<>();
 
     }
 
     public LiveData<List<Game>> getGames() {
-        System.out.println("Hello there" + this.games);
-        new GetGamesAsyncTask(this.api).execute(fetchList);
+        new GetGamesAsyncTask(this.api, this.games).execute(fetchList);
         return this.games;
     }
 
@@ -36,41 +36,30 @@ public class GamesRepository {
 
     private class GetGamesAsyncTask extends AsyncTask<List<String>, Void, Void> {
         private GameService api;
-        private LiveData<List<Game>> liveDataList;
+        private MutableLiveData<List<Game>> liveDataList;
 
-        private GetGamesAsyncTask(GameService api) {
+        private GetGamesAsyncTask(GameService api, LiveData<List<Game>> liveDataList) {
             this.api = api;
-            liveDataList = new MutableLiveData<List<Game>>();
-            System.out.println("More cancer");
+            this.liveDataList = (MutableLiveData) liveDataList;
         }
 
         @Override
         protected Void doInBackground(List<String>... games) {
-            System.out.println("Things are happening");
             ArrayList<Game> gameList = new ArrayList<>();
             for(String title : games[0]) {
                 Call<Result> r = api.getGame(title);
+                System.out.println("The list has this size: " + games[0].size());
+                System.out.println("Fetching: " + title);
                 try {
                     Result fetchedResult = r.execute().body();
-                    System.out.println("for the love of fucking god " + fetchedResult.getGame());
                     gameList.add(fetchedResult.getGame());
                 }
                 catch(IOException ex) {
                     ex.printStackTrace();
                 }
             }
-            liveDataList.getValue().addAll(gameList);
-            System.out.printf("Do we perhaps make it to the end?");
+            liveDataList.postValue(gameList);
             return null;
         }
-        @Override
-        protected void onPostExecute(Void result) {
-            System.out.println("This actually happens" + liveDataList);
-            setGames(liveDataList);
-        }
-
-
     }
-
-
 }

@@ -8,7 +8,7 @@ public class Game {
     private String title;
 
     @SerializedName("genre")
-    private String genre;
+    private String[] genre;
 
     @SerializedName("description")
     private String description;
@@ -23,12 +23,12 @@ public class Game {
     private String platform;
 
     @SerializedName("publisher")
-    private String publisher;
+    private String[] publisher;
 
     @SerializedName("developer")
     private String developer;
 
-    public Game(String title, String genre, String description, String imageURL, String score, String platform, String publisher, String developer) {
+    public Game(String title, String[] genre, String description, String imageURL, String score, String platform, String[] publisher, String developer) {
         this.title = title;
         this.genre = genre;
         this.description = description;
@@ -47,11 +47,11 @@ public class Game {
         this.title = title;
     }
 
-    public String getGenre() {
+    public String[] getGenre() {
         return genre;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(String[] genre) {
         this.genre = genre;
     }
 
@@ -87,11 +87,11 @@ public class Game {
         this.platform = platform;
     }
 
-    public String getPublisher() {
+    public String[] getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(String publisher) {
+    public void setPublisher(String[] publisher) {
         this.publisher = publisher;
     }
 
@@ -102,5 +102,4 @@ public class Game {
     public void setDeveloper(String developer) {
         this.developer = developer;
     }
-
 }
