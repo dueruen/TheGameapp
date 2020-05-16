@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class RetrofitClient {
 
     private static Retrofit instance;
-    private static final String BASE_URL = "https://chicken-coop.fr/rest/games/";
+    private static final String BASE_URL = "https://api.rawg.io/api/";
 
     private RetrofitClient() {}
 

@@ -6,7 +6,16 @@ import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface GameService {
-    @GET("{title}") //?platform=[{platform}]&amp;selectors[]=title&amp;selectors[]=genre&amp;selectors[]=score&amp;selectors[]=alsoAvailableOn&amp;selectors[]=image&amp;selectors[]=description")
-    Call<Result> getGame(@Path("title")String title);
+    @GET("games/{id}")
+    Call<Game> getGameByID(@Path("id")String id);
+
+    /**
+     * Returns all released games within the specified timeperiod
+     * @param intervalString Dates must be in format YYYY-MM-DD, and the to and from must be comma-separated,
+     * e.g.: YYYY-MM-DD,YYYY-MM-DD
+     * @return
+     */
+    @GET("games")
+    Call<Result> getGamesFromTimeInterval(@Query("dates")String intervalString);
 }
 

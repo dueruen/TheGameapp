@@ -4,25 +4,25 @@ import com.google.gson.annotations.SerializedName;
 
 public class Result {
 
-    @SerializedName("countResult")
+    @SerializedName("count")
     private int resultCount;
 
 
-    @SerializedName("result")
-    private Game game;
+    @SerializedName("results")
+    private Game[] games;
 
 
-    public Result(int resultCount, Game game) {
+    public Result(int resultCount, Game[] games) {
         this.resultCount = resultCount;
-        this.game = game;
+        this.games = games;
     }
 
-    public Game getGame() {
-        return game;
+    public Game[] getGames() {
+        return games;
     }
 
-    public void setGame(Game game) {
-        this.game = game;
+    public void setGames(Game[] games) {
+        this.games = games;
     }
 
     public int getResultCount() {

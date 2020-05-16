@@ -40,6 +40,8 @@ public class HomeFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         gamesViewModel = ViewModelProviders.of(this).get(GamesViewModel.class);
+        //Use this one for a specific gameID
+        //gamesViewModel.getGameByID("3498").observe(this, new Observer<List<Game>>() {
         gamesViewModel.getGames().observe(this, new Observer<List<Game>>() {
             @Override
             public void onChanged(List<Game> games) {

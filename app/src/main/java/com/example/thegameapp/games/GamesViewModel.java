@@ -17,10 +17,16 @@ public class GamesViewModel extends AndroidViewModel {
     public GamesViewModel(@NonNull Application application) {
         super(application);
         gameRepository = new GamesRepository();
-        games = gameRepository.getGames();
+        games = gameRepository.getGamesFromTimeInterval();
     }
 
     public LiveData<List<Game>> getGames() {
         return games;
     }
+
+    public LiveData<List<Game>> getGameByID(String id) {
+        return gameRepository.getGameFromID(id);
+    }
+
+
 }

@@ -4,7 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 public class Game {
 
-    @SerializedName("title")
+    @SerializedName("id")
+    private String id;
+
+    @SerializedName("name")
     private String title;
 
     @SerializedName("genre")
@@ -13,11 +16,11 @@ public class Game {
     @SerializedName("description")
     private String description;
 
-    @SerializedName("image")
+    @SerializedName("background_image")
     private String imageURL;
 
-    @SerializedName("score")
-    private String score;
+    @SerializedName("metacritic")
+    private int score;
 
     @SerializedName("platform")
     private String platform;
@@ -28,7 +31,7 @@ public class Game {
     @SerializedName("developer")
     private String developer;
 
-    public Game(String title, String[] genre, String description, String imageURL, String score, String platform, String[] publisher, String developer) {
+    public Game(String title, String[] genre, String description, String imageURL, int score, String platform, String[] publisher, String developer) {
         this.title = title;
         this.genre = genre;
         this.description = description;
@@ -71,11 +74,11 @@ public class Game {
         this.imageURL = imageURL;
     }
 
-    public String getScore() {
+    public int getScore() {
         return score;
     }
 
-    public void setScore(String score) {
+    public void setScore(int score) {
         this.score = score;
     }
 

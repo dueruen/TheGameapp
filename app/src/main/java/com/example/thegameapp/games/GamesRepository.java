@@ -4,10 +4,13 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.room.Database;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -15,18 +18,21 @@ import retrofit2.Call;
 public class GamesRepository {
     private LiveData<List<Game>> games;
     private GameService api;
-    private String[] gamesToFetch = new String[] { "Warcraft III: Reign of Chaos", "Jazzpunk"};
-    private List<String> fetchList;
+    private final String RECENT_RELEASE_PERIOD =  "2020-01-01,2020-05-01";
 
     public GamesRepository() {
         api = RetrofitClient.getInstance().create(GameService.class);
-        fetchList = Arrays.asList(gamesToFetch);
         games =  new MutableLiveData<>();
 
     }
 
-    public LiveData<List<Game>> getGames() {
-        new GetGamesAsyncTask(this.api, this.games).execute(fetchList);
+    public LiveData<List<Game>> getGamesFromTimeInterval() {
+        new GetGamesFromTimeIntervalAsyncTask(this.api, this.games).execute(RECENT_RELEASE_PERIOD);
+        return this.games;
+    }
+
+    public LiveData<List<Game>> getGameFromID(String id) {
+        new GetGameFromIDAsyncTask(this.api, this.games).execute(id);
         return this.games;
     }
 
@@ -34,30 +40,63 @@ public class GamesRepository {
         this.games = games;
     }
 
-    private class GetGamesAsyncTask extends AsyncTask<List<String>, Void, Void> {
+    private class GetGameFromIDAsyncTask extends AsyncTask<String, Void, Void> {
         private GameService api;
         private MutableLiveData<List<Game>> liveDataList;
 
-        private GetGamesAsyncTask(GameService api, LiveData<List<Game>> liveDataList) {
+        private GetGameFromIDAsyncTask(GameService api, LiveData<List<Game>> liveDataList) {
             this.api = api;
             this.liveDataList = (MutableLiveData) liveDataList;
         }
 
         @Override
-        protected Void doInBackground(List<String>... games) {
+        protected Void doInBackground(String... ID) {
             ArrayList<Game> gameList = new ArrayList<>();
-            for(String title : games[0]) {
-                Call<Result> r = api.getGame(title);
-                System.out.println("The list has this size: " + games[0].size());
-                System.out.println("Fetching: " + title);
-                try {
-                    Result fetchedResult = r.execute().body();
-                    gameList.add(fetchedResult.getGame());
-                }
-                catch(IOException ex) {
-                    ex.printStackTrace();
-                }
+            Call<Game> r = api.getGameByID(ID[0]);
+            try {
+                Game fetchedGame = r.execute().body();
+                gameList.clear();
+                gameList.add(fetchedGame);
+                liveDataList.postValue(gameList);
             }
+            catch(IOException ex) {
+                ex.printStackTrace();
+            }
+            return null;
+        }
+    }
+
+    private class GetGamesFromTimeIntervalAsyncTask extends AsyncTask<String, Void, Void> {
+        private GameService api;
+        private MutableLiveData<List<Game>> liveDataList;
+
+        private GetGamesFromTimeIntervalAsyncTask(GameService api, LiveData<List<Game>> liveDataList) {
+            this.api = api;
+            this.liveDataList = (MutableLiveData) liveDataList;
+        }
+
+        @Override
+        protected Void doInBackground(String... timeInterval) {
+            ArrayList<Game> gameList = new ArrayList<>();
+            Call<Result> r = api.getGamesFromTimeInterval(timeInterval[0]);
+            try {
+                Result fetchedResult = r.execute().body();
+                Game[] fetchedGames = fetchedResult.getGames();
+                gameList.addAll(Arrays.asList(fetchedGames));
+            }
+            catch(IOException ex) {
+                ex.printStackTrace();
+            }
+
+            Collections.sort(gameList, new Comparator<Game>() {
+                @Override
+                public int compare(Game g1, Game g2) {
+                    return Integer.compare(g1.getScore(), g2.getScore());
+                }
+            });
+
+            Collections.reverse(gameList);
+
             liveDataList.postValue(gameList);
             return null;
         }
