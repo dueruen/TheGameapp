@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,6 @@ import com.example.thegameapp.favorites.FavoritesViewModel;
 import com.example.thegameapp.favorites.entities.FavoriteEntity;
 import com.example.thegameapp.games.entities.Game;
 import com.example.thegameapp.games.entities.Publisher;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
@@ -77,7 +75,6 @@ public class GameDetailsFragment extends Fragment implements View.OnClickListene
             }
         });
 
-
         gamesViewModel = ViewModelProviders.of(this).get(GamesViewModel.class);
         gamesViewModel.getGameByID(gameID).observe(this, new Observer<List<Game>>() {
             @Override
@@ -86,7 +83,7 @@ public class GameDetailsFragment extends Fragment implements View.OnClickListene
                 //this will ensure that nothing happens until it is done loading
                 if(games.size() == 1) {
                     current = games.get(0);
-                    updateGameData(gameID);
+                    updateGameData();
                 }
             }
         });
@@ -94,7 +91,7 @@ public class GameDetailsFragment extends Fragment implements View.OnClickListene
         return root;
     }
 
-    public void updateGameData(String gameID) {
+    public void updateGameData() {
         gameTitleTV.setText(current.getTitle());
         gameDescriptionTV.setText(current.getDescription());
         scoreTV.setText(String.valueOf(current.getScore()));
@@ -122,6 +119,7 @@ public class GameDetailsFragment extends Fragment implements View.OnClickListene
         }
 
     }
+
 
     private void favoritesButtonOnClick(View v) {
         if (isFavorite) {
