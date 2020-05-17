@@ -2,6 +2,7 @@ package com.example.thegameapp.favorites;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +22,16 @@ import java.util.List;
 
 public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.FavoritesHolder> {
 
+    public interface OnFavoritesListener {
+        void onFavoriteClick(int position, String gameID);
+    }
+
+    private OnFavoritesListener mCallback;
     private List<FavoriteEntity> favorites = new ArrayList<>();
+
+    public FavoritesAdapter(OnFavoritesListener favoritesListener) {
+        this.mCallback = favoritesListener;
+    }
 
     @NonNull
     @Override
@@ -38,13 +48,6 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         holder.textViewScore.setText(String.valueOf(current.getScore()));
 
         Glide.with(holder.imageView).load(current.getImage()).into(holder.imageView);
-//        try {
-//            URL url = new URL(current.getImage());
-//            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-//            holder.imageView.setImageBitmap(bmp);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
 
     @Override
@@ -60,16 +63,24 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         notifyDataSetChanged();
     }
 
-    class FavoritesHolder extends RecyclerView.ViewHolder {
+    class FavoritesHolder extends RecyclerView.ViewHolder implements RecyclerView.OnClickListener{
         private TextView textViewTitle;
         private TextView textViewScore;
         private ImageView imageView;
 
         public FavoritesHolder(@NonNull View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             textViewTitle = itemView.findViewById(R.id.game_title);
             textViewScore = itemView.findViewById(R.id.game_score);
             imageView = itemView.findViewById(R.id.game_image);
+        }
+
+        @Override
+        public void onClick(View v) {
+            int index = this.getLayoutPosition();
+            String gameID = Integer.toString(favorites.get(index).getId());
+            mCallback.onFavoriteClick(index, gameID);
         }
     }
 }

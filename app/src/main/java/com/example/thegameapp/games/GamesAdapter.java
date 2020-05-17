@@ -35,7 +35,7 @@ public class GamesAdapter extends RecyclerView.Adapter<com.example.thegameapp.ga
     public com.example.thegameapp.games.GamesAdapter.GamesHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.game_item, parent, false);
-        return new com.example.thegameapp.games.GamesAdapter.GamesHolder(itemView);
+        return new GamesHolder(itemView);
     }
 
     @Override
