@@ -9,23 +9,21 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.thegameapp.R;
-import com.example.thegameapp.games.Game;
+import com.example.thegameapp.games.entities.Game;
 import com.example.thegameapp.games.GamesAdapter;
-import com.example.thegameapp.games.GamesRepository;
 import com.example.thegameapp.games.GamesViewModel;
 
 import java.util.List;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements GamesAdapter.OnGameListener {
 
     private GamesViewModel gamesViewModel;
-
-
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -36,12 +34,11 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setHasFixedSize(true);
 
-        final GamesAdapter adapter = new GamesAdapter();
+        final GamesAdapter adapter = new GamesAdapter(this);
         recyclerView.setAdapter(adapter);
 
         gamesViewModel = ViewModelProviders.of(this).get(GamesViewModel.class);
-        //Use this one for a specific gameID
-        //gamesViewModel.getGameByID("3498").observe(this, new Observer<List<Game>>() {
+
         gamesViewModel.getGames().observe(this, new Observer<List<Game>>() {
             @Override
             public void onChanged(List<Game> games) {
@@ -50,4 +47,13 @@ public class HomeFragment extends Fragment {
         });
         return root;
     }
+
+    @Override
+    public void onGameClick(int position, String gameID) {
+        Bundle args = new Bundle();
+        args.putString("GAME_ID", gameID);
+        NavController navController = Navigation.findNavController(getActivity(), R.id.nav_host_fragment);
+        navController.navigate(R.id.action_HomeFragment_to_GameDetails, args);
+    }
 }
+

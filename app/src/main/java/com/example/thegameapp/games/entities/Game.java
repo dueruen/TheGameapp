@@ -1,8 +1,9 @@
-package com.example.thegameapp.games;
+package com.example.thegameapp.games.entities;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Game {
+public class Game implements Comparable<Game> {
 
     @SerializedName("id")
     private String id;
@@ -13,7 +14,7 @@ public class Game {
     @SerializedName("genre")
     private String[] genre;
 
-    @SerializedName("description")
+    @SerializedName("description_raw")
     private String description;
 
     @SerializedName("background_image")
@@ -25,21 +26,36 @@ public class Game {
     @SerializedName("platform")
     private String platform;
 
-    @SerializedName("publisher")
-    private String[] publisher;
+    @SerializedName("publishers")
+    @Expose
+    private Publisher[] publishers;
 
     @SerializedName("developer")
     private String developer;
 
-    public Game(String title, String[] genre, String description, String imageURL, int score, String platform, String[] publisher, String developer) {
+    public Game(String title, String[] genre, String description, String imageURL, int score, String platform, Publisher[] publishers, String developer) {
         this.title = title;
         this.genre = genre;
         this.description = description;
         this.imageURL = imageURL;
         this.score = score;
         this.platform = platform;
-        this.publisher = publisher;
+        this.publishers = publishers;
         this.developer = developer;
+
+    }
+
+    @Override
+    public int compareTo(Game game) {
+        return game.getScore() - this.score;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
@@ -90,12 +106,12 @@ public class Game {
         this.platform = platform;
     }
 
-    public String[] getPublisher() {
-        return publisher;
+    public Publisher[] getPublishers() {
+        return publishers;
     }
 
-    public void setPublisher(String[] publisher) {
-        this.publisher = publisher;
+    public void setPublisher(Publisher[] publishers) {
+        this.publishers = publishers;
     }
 
     public String getDeveloper() {

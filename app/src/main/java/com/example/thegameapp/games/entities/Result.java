@@ -1,5 +1,6 @@
-package com.example.thegameapp.games;
+package com.example.thegameapp.games.entities;
 
+import com.example.thegameapp.games.entities.Game;
 import com.google.gson.annotations.SerializedName;
 
 public class Result {

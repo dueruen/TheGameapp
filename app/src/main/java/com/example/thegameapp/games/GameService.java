@@ -1,5 +1,8 @@
 package com.example.thegameapp.games;
 
+import com.example.thegameapp.games.entities.Game;
+import com.example.thegameapp.games.entities.Result;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

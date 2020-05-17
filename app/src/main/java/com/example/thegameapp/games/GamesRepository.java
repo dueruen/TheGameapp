@@ -4,13 +4,14 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.room.Database;
+
+import com.example.thegameapp.games.entities.Game;
+import com.example.thegameapp.games.entities.Result;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
@@ -23,7 +24,6 @@ public class GamesRepository {
     public GamesRepository() {
         api = RetrofitClient.getInstance().create(GameService.class);
         games =  new MutableLiveData<>();
-
     }
 
     public LiveData<List<Game>> getGamesFromTimeInterval() {
@@ -43,19 +43,21 @@ public class GamesRepository {
     private class GetGameFromIDAsyncTask extends AsyncTask<String, Void, Void> {
         private GameService api;
         private MutableLiveData<List<Game>> liveDataList;
+        private ArrayList<Game> gameList;
 
         private GetGameFromIDAsyncTask(GameService api, LiveData<List<Game>> liveDataList) {
             this.api = api;
             this.liveDataList = (MutableLiveData) liveDataList;
+            gameList = new ArrayList<>();
+            this.liveDataList.postValue(gameList);
         }
 
         @Override
         protected Void doInBackground(String... ID) {
-            ArrayList<Game> gameList = new ArrayList<>();
+
             Call<Game> r = api.getGameByID(ID[0]);
             try {
                 Game fetchedGame = r.execute().body();
-                gameList.clear();
                 gameList.add(fetchedGame);
                 liveDataList.postValue(gameList);
             }
@@ -88,14 +90,7 @@ public class GamesRepository {
                 ex.printStackTrace();
             }
 
-            Collections.sort(gameList, new Comparator<Game>() {
-                @Override
-                public int compare(Game g1, Game g2) {
-                    return Integer.compare(g1.getScore(), g2.getScore());
-                }
-            });
-
-            Collections.reverse(gameList);
+            Collections.sort(gameList);
 
             liveDataList.postValue(gameList);
             return null;
