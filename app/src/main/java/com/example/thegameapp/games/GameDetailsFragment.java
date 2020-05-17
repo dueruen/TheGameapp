@@ -21,7 +21,6 @@ import com.example.thegameapp.favorites.FavoritesViewModel;
 import com.example.thegameapp.favorites.entities.FavoriteEntity;
 import com.example.thegameapp.games.entities.Game;
 import com.example.thegameapp.games.entities.Publisher;
-import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
@@ -29,6 +28,7 @@ import java.util.List;
 public class GameDetailsFragment extends Fragment implements View.OnClickListener {
 
     private GamesViewModel gamesViewModel;
+    private FavoritesViewModel favoritesViewModel;
     private TextView gameTitleTV;
     private ScrollView gameDescriptionSV;
     private TextView gameDescriptionTV;
@@ -36,6 +36,7 @@ public class GameDetailsFragment extends Fragment implements View.OnClickListene
     private TextView publisherTV;
     private ImageView gameIV;
     private Button addToFavoritesButton;
+    private boolean isFavorite;
 
     private Game current;
 
@@ -51,10 +52,28 @@ public class GameDetailsFragment extends Fragment implements View.OnClickListene
         publisherTV = root.findViewById(R.id.publisherTextView);
         gameIV = root.findViewById(R.id.gameImage);
 
+        String gameID = getArguments().getString("GAME_ID");
+
+        favoritesViewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
         addToFavoritesButton = root.findViewById(R.id.addToFavoritesButton);
         addToFavoritesButton.setOnClickListener(this);
 
-        String gameID = getArguments().getString("GAME_ID");
+        favoritesViewModel.getFavorites().observe(this, new Observer<List<FavoriteEntity>>() {
+            @Override
+            public void onChanged(List<FavoriteEntity> favoriteEntities) {
+                if (favoriteEntities.size()!= 0) {
+                    for (FavoriteEntity f : favoriteEntities) {
+                        if (Integer.toString(f.getId()).equals(gameID)) {
+                            addToFavoritesButton.setText("Remove from favorites");
+                            isFavorite = true;
+                            return;
+                        }
+                    }
+                }
+                addToFavoritesButton.setText("Add to favorites");
+                isFavorite = false;
+            }
+        });
 
         gamesViewModel = ViewModelProviders.of(this).get(GamesViewModel.class);
         gamesViewModel.getGameByID(gameID).observe(this, new Observer<List<Game>>() {
@@ -87,14 +106,13 @@ public class GameDetailsFragment extends Fragment implements View.OnClickListene
             publishersSB.append("\n");
         }
         publisherTV.setText(publishersSB.toString());
-
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.addToFavoritesButton:
-                addToFavoritesButtonOnClick(v);
+                favoritesButtonOnClick(v);
                 break;
             default:
                 break;
@@ -102,9 +120,16 @@ public class GameDetailsFragment extends Fragment implements View.OnClickListene
 
     }
 
-    private void addToFavoritesButtonOnClick(View v) {
-        FavoritesViewModel fvm = ViewModelProviders.of(this).get(FavoritesViewModel.class);
-        fvm.insert(new FavoriteEntity(current.getTitle(),current.getScore(),current.getImageURL()));
+
+    private void favoritesButtonOnClick(View v) {
+        if (isFavorite) {
+            favoritesViewModel.delete(new FavoriteEntity(Integer.parseInt(current.getId()), current.getTitle(),current.getScore(),current.getImageURL()));
+            String message = String.format("%s successfully removed from favorites",current.getTitle());
+            Snackbar snack = Snackbar.make(v,message, Snackbar.LENGTH_LONG);
+            snack.show();
+            return;
+        }
+        favoritesViewModel.insert(new FavoriteEntity(Integer.parseInt(current.getId()), current.getTitle(),current.getScore(),current.getImageURL()));
         String message = String.format("%s successfully added to favorites",current.getTitle());
         Snackbar snack = Snackbar.make(v,message, Snackbar.LENGTH_LONG);
         snack.show();

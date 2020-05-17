@@ -32,13 +32,12 @@
 
     <ScrollView
         android:id="@+id/gameDescriptionScrollView"
-        android:layout_width="202dp"
-        android:layout_height="215dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="90dp"
-        app:layout_constraintStart_toEndOf="@+id/gameImage"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="341dp"
+        android:layout_height="351dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintEnd_toEndOf="@+id/metacriticScoreHeadline"
+        app:layout_constraintStart_toStartOf="@+id/gameImage"
+        app:layout_constraintTop_toBottomOf="@+id/gameImage">
 
         <TextView
             android:id="@+id/description"
@@ -51,24 +50,24 @@
         android:id="@+id/metacriticScoreHeadline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginStart="164dp"
+        android:layout_marginLeft="164dp"
+        android:layout_marginTop="8dp"
         android:text="@string/metacritic_headline"
         android:textSize="25dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/gameImage" />
+        app:layout_constraintTop_toBottomOf="@+id/gameTitleTextView" />
 
     <TextView
         android:id="@+id/metacriticScoreTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginStart="164dp"
+        android:layout_marginLeft="164dp"
+        android:layout_marginTop="8dp"
         android:text="metacriticScore"
-        android:textStyle="bold"
         android:textSize="25dp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/metacriticScoreHeadline" />
 
@@ -76,33 +75,30 @@
         android:id="@+id/publisherHeadline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="8dp"
         android:text="@string/publisher_headline"
         app:layout_constraintStart_toEndOf="@+id/gameImage"
-        app:layout_constraintTop_toBottomOf="@+id/gameDescriptionScrollView" />
+        app:layout_constraintTop_toBottomOf="@+id/metacriticScoreTextView" />
 
     <TextView
         android:id="@+id/publisherTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="9dp"
         android:text="publisher "
         app:layout_constraintStart_toEndOf="@+id/publisherHeadline"
-        app:layout_constraintTop_toBottomOf="@+id/gameDescriptionScrollView" />
+        app:layout_constraintTop_toBottomOf="@+id/metacriticScoreTextView" />
 
     <Button
         android:id="@+id/addToFavoritesButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginBottom="50dp"
         android:text="@string/add_to_favorites_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/publisherHeadline"
+        app:layout_constraintTop_toBottomOf="@+id/publisherHeadline" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

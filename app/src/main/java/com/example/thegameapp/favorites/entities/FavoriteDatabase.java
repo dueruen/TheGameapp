@@ -8,7 +8,7 @@ import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = {FavoriteEntity.class}, version = 1, exportSchema = false)
+@Database(entities = {FavoriteEntity.class}, version = 2, exportSchema = false)
 public abstract class FavoriteDatabase extends RoomDatabase {
     private static FavoriteDatabase instance;
     public abstract FavoriteDao favoriteDao();
@@ -42,22 +42,26 @@ public abstract class FavoriteDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... Void) {
-            favoriteDao.insert(new FavoriteEntity(
+            /*favoriteDao.insert(new FavoriteEntity(
+                    12345,
                     "TEST_TITLE01",
                     9999,
                     "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQB_DE_tw2pRS7u7Bw4PjZfINbgwpAcakrYaLrRZZtbHJ4eFoL5&usqp=CAU"));
             favoriteDao.insert(new FavoriteEntity(
+                    123456,
                     "TEST_TITLE02",
                     9999,
                     "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQB_DE_tw2pRS7u7Bw4PjZfINbgwpAcakrYaLrRZZtbHJ4eFoL5&usqp=CAU"));
             favoriteDao.insert(new FavoriteEntity(
+                    123457,
                     "TEST_TITLE03",
                     9999,
                     "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQB_DE_tw2pRS7u7Bw4PjZfINbgwpAcakrYaLrRZZtbHJ4eFoL5&usqp=CAU"));
             favoriteDao.insert(new FavoriteEntity(
+                    123458,
                     "TEST_TITLE04",
                     9999,
-                    "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQB_DE_tw2pRS7u7Bw4PjZfINbgwpAcakrYaLrRZZtbHJ4eFoL5&usqp=CAU"));
+                    "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQB_DE_tw2pRS7u7Bw4PjZfINbgwpAcakrYaLrRZZtbHJ4eFoL5&usqp=CAU"));*/
             return null;
         }
     }

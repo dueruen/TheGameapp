@@ -2,8 +2,10 @@ package com.example.thegameapp.favorites;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 
 import com.example.thegameapp.favorites.entities.FavoriteDao;
 import com.example.thegameapp.favorites.entities.FavoriteDatabase;
@@ -19,6 +21,7 @@ public class FavoriteRepository {
         FavoriteDatabase database = FavoriteDatabase.getInstance(application);
         favoriteDao = database.favoriteDao();
         favorites = favoriteDao.getFavorites();
+        Log.wtf("TEST", "FAV size " + favorites);
     }
 
     public void insert(FavoriteEntity f) {
