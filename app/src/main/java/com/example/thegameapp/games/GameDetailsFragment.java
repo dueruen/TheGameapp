@@ -21,6 +21,8 @@ import com.example.thegameapp.favorites.FavoritesViewModel;
 import com.example.thegameapp.favorites.entities.FavoriteEntity;
 import com.example.thegameapp.games.entities.Game;
 import com.example.thegameapp.games.entities.Publisher;
+import com.google.android.material.snackbar.BaseTransientBottomBar;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
 
@@ -92,7 +94,7 @@ public class GameDetailsFragment extends Fragment implements View.OnClickListene
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.addToFavoritesButton:
-                addToFavoritesButtonOnClick();
+                addToFavoritesButtonOnClick(v);
                 break;
             default:
                 break;
@@ -100,8 +102,11 @@ public class GameDetailsFragment extends Fragment implements View.OnClickListene
 
     }
 
-    private void addToFavoritesButtonOnClick() {
+    private void addToFavoritesButtonOnClick(View v) {
         FavoritesViewModel fvm = ViewModelProviders.of(this).get(FavoritesViewModel.class);
         fvm.insert(new FavoriteEntity(current.getTitle(),current.getScore(),current.getImageURL()));
+        String message = String.format("%s successfully added to favorites",current.getTitle());
+        Snackbar snack = Snackbar.make(v,message, Snackbar.LENGTH_LONG);
+        snack.show();
     }
 }
