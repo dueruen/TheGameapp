@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">The Game app</string>
+    <string name="app_name">The Game App</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">The Game app</string>
@@ -12,5 +12,13 @@
     <string name="menu_favorites">Favorites</string>
     <string name="menu_login">Login</string>
 
-    <string name="home_second">Home Second</string>
+    <string name="game_details">Game Details</string>
+
+    <string name="metacritic_headline">Metacritic Score</string>
+    <string name="publisher_headline">Publisher:</string>
+    <string name="platforms_headline">Platforms:</string>
+    <string name="genres_headline">Genres:</string>
+
+    <string name="add_to_favorites_button">Add To Favorites</string>
+
 </resources>
