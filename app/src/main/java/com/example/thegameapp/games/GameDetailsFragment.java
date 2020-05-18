@@ -54,7 +54,6 @@ public class GameDetailsFragment extends Fragment implements View.OnClickListene
         releaseTV = root.findViewById(R.id.releaseDateTextView);
         gameIV = root.findViewById(R.id.gameImage);
 
-
         String gameID = getArguments().getString("GAME_ID");
 
         favoritesViewModel = ViewModelProviders.of(this).get(FavoritesViewModel.class);
