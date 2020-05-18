@@ -9,9 +9,12 @@ import com.example.thegameapp.games.entities.Game;
 import com.example.thegameapp.games.entities.Result;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -19,15 +22,19 @@ import retrofit2.Call;
 public class GamesRepository {
     private LiveData<List<Game>> games;
     private GameService api;
-    private final String RECENT_RELEASE_PERIOD =  "2020-01-01,2020-05-01";
+    private String recentReleasePeriod;
+    private final String ORDERING = "-rating"; //For descending ordering based on rating
+    private final int RECENT_RELEASE_MONTH_BACKTRACK = 2;
 
     public GamesRepository() {
         api = RetrofitClient.getInstance().create(GameService.class);
         games =  new MutableLiveData<>();
+        recentReleasePeriod = getRecentReleasePeriod();
+
     }
 
     public LiveData<List<Game>> getGamesFromTimeInterval() {
-        new GetGamesFromTimeIntervalAsyncTask(this.api, this.games).execute(RECENT_RELEASE_PERIOD);
+        new GetGamesFromTimeIntervalAsyncTask(this.api, this.games).execute(recentReleasePeriod);
         return this.games;
     }
 
@@ -54,8 +61,8 @@ public class GamesRepository {
 
         @Override
         protected Void doInBackground(String... ID) {
-
             Call<Game> r = api.getGameByID(ID[0]);
+
             try {
                 Game fetchedGame = r.execute().body();
                 gameList.add(fetchedGame);
@@ -71,16 +78,19 @@ public class GamesRepository {
     private class GetGamesFromTimeIntervalAsyncTask extends AsyncTask<String, Void, Void> {
         private GameService api;
         private MutableLiveData<List<Game>> liveDataList;
+        private ArrayList<Game> gameList;
 
         private GetGamesFromTimeIntervalAsyncTask(GameService api, LiveData<List<Game>> liveDataList) {
             this.api = api;
             this.liveDataList = (MutableLiveData) liveDataList;
+            gameList = new ArrayList<>();
+            this.liveDataList.postValue(gameList);
         }
 
         @Override
         protected Void doInBackground(String... timeInterval) {
-            ArrayList<Game> gameList = new ArrayList<>();
-            Call<Result> r = api.getGamesFromTimeInterval(timeInterval[0]);
+            Call<Result> r = api.getGamesFromTimeInterval(timeInterval[0], ORDERING);
+
             try {
                 Result fetchedResult = r.execute().body();
                 Game[] fetchedGames = fetchedResult.getGames();
@@ -95,5 +105,25 @@ public class GamesRepository {
             liveDataList.postValue(gameList);
             return null;
         }
+    }
+
+    private String getRecentReleasePeriod() {
+        StringBuilder releasePeriodSB = new StringBuilder();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar cal = Calendar.getInstance();
+
+        //Current date
+        Date currentDate = cal.getTime();
+        String convertedCurrentDate =sdf.format(currentDate);
+
+        //Two months ago
+        cal.add(Calendar.MONTH, -RECENT_RELEASE_MONTH_BACKTRACK);
+        Date reducedDate = cal.getTime();
+        String convertedReducedDate =sdf.format(reducedDate);
+
+        releasePeriodSB.append(convertedReducedDate);
+        releasePeriodSB.append(",");
+        releasePeriodSB.append(convertedCurrentDate);
+        return releasePeriodSB.toString();
     }
 }

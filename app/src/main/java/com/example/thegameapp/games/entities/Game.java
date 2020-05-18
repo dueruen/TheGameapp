@@ -11,8 +11,11 @@ public class Game implements Comparable<Game> {
     @SerializedName("name")
     private String title;
 
-    @SerializedName("genre")
-    private String[] genre;
+    @SerializedName("publishers")
+    private Publisher[] publishers;
+
+    @SerializedName("genres")
+    private Genre[] genre;
 
     @SerializedName("description_raw")
     private String description;
@@ -26,14 +29,13 @@ public class Game implements Comparable<Game> {
     @SerializedName("platform")
     private String platform;
 
-    @SerializedName("publishers")
-    @Expose
-    private Publisher[] publishers;
+    @SerializedName("developers")
+    private Developer[] developer;
 
-    @SerializedName("developer")
-    private String developer;
+    @SerializedName("released")
+    private String releaseDate;
 
-    public Game(String title, String[] genre, String description, String imageURL, int score, String platform, Publisher[] publishers, String developer) {
+    public Game(String title, Genre[] genre, String description, String imageURL, int score, String platform, Publisher[] publishers, Developer[] developer, String releaseDate) {
         this.title = title;
         this.genre = genre;
         this.description = description;
@@ -42,7 +44,7 @@ public class Game implements Comparable<Game> {
         this.platform = platform;
         this.publishers = publishers;
         this.developer = developer;
-
+        this.releaseDate = releaseDate;
     }
 
     @Override
@@ -66,11 +68,11 @@ public class Game implements Comparable<Game> {
         this.title = title;
     }
 
-    public String[] getGenre() {
+    public Genre[] getGenre() {
         return genre;
     }
 
-    public void setGenre(String[] genre) {
+    public void setGenre(Genre[] genre) {
         this.genre = genre;
     }
 
@@ -106,19 +108,27 @@ public class Game implements Comparable<Game> {
         this.platform = platform;
     }
 
+    public Developer[] getDeveloper() {
+        return developer;
+    }
+
+    public void setDeveloper(Developer[] developer) {
+        this.developer = developer;
+    }
+
     public Publisher[] getPublishers() {
         return publishers;
     }
 
-    public void setPublisher(Publisher[] publishers) {
+    public void setPublishers(Publisher[] publishers) {
         this.publishers = publishers;
     }
 
-    public String getDeveloper() {
-        return developer;
+    public String getReleaseDate() {
+        return releaseDate;
     }
 
-    public void setDeveloper(String developer) {
-        this.developer = developer;
+    public void setReleaseDate(String releaseDate) {
+        this.releaseDate = releaseDate;
     }
 }

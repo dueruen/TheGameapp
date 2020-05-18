@@ -34,6 +34,7 @@ public class GameDetailsFragment extends Fragment implements View.OnClickListene
     private TextView gameDescriptionTV;
     private TextView scoreTV;
     private TextView publisherTV;
+    private TextView releaseTV;
     private ImageView gameIV;
     private Button addToFavoritesButton;
     private boolean isFavorite;
@@ -50,7 +51,9 @@ public class GameDetailsFragment extends Fragment implements View.OnClickListene
         gameDescriptionTV = gameDescriptionSV.findViewById(R.id.description);
         scoreTV = root.findViewById(R.id.metacriticScoreTextView);
         publisherTV = root.findViewById(R.id.publisherTextView);
+        releaseTV = root.findViewById(R.id.releaseDateTextView);
         gameIV = root.findViewById(R.id.gameImage);
+
 
         String gameID = getArguments().getString("GAME_ID");
 
@@ -64,13 +67,13 @@ public class GameDetailsFragment extends Fragment implements View.OnClickListene
                 if (favoriteEntities.size()!= 0) {
                     for (FavoriteEntity f : favoriteEntities) {
                         if (Integer.toString(f.getId()).equals(gameID)) {
-                            addToFavoritesButton.setText("Remove from favorites");
+                            addToFavoritesButton.setText(R.string.remove_from_favorites_button);
                             isFavorite = true;
                             return;
                         }
                     }
                 }
-                addToFavoritesButton.setText("Add to favorites");
+                addToFavoritesButton.setText(R.string.add_to_favorites_button);
                 isFavorite = false;
             }
         });
@@ -95,6 +98,7 @@ public class GameDetailsFragment extends Fragment implements View.OnClickListene
         gameTitleTV.setText(current.getTitle());
         gameDescriptionTV.setText(current.getDescription());
         scoreTV.setText(String.valueOf(current.getScore()));
+        releaseTV.setText(current.getReleaseDate());
 
         Glide.with(gameIV).load(current.getImageURL()).into(gameIV);
 

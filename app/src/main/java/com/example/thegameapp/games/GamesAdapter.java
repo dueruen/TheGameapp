@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.thegameapp.R;
 import com.example.thegameapp.games.entities.Game;
+import com.example.thegameapp.games.entities.Genre;
+import com.example.thegameapp.games.entities.Publisher;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +45,19 @@ public class GamesAdapter extends RecyclerView.Adapter<com.example.thegameapp.ga
         Game current = games.get(position);
         holder.textViewTitle.setText(current.getTitle());
         holder.textViewScore.setText(String.valueOf(current.getScore()));
+        holder.textViewReleaseDate.setText(current.getReleaseDate());
+
+        //Build genre string
+        Genre[] genres = current.getGenre();
+        StringBuilder genresSB = new StringBuilder();
+
+        for(int i = 0; i < genres.length; i++) {
+            genresSB.append(genres[i].getName());
+            genresSB.append("\n");
+        }
+        holder.textViewGenre.setText(genresSB.toString());
+
+
         Glide.with(holder.imageView).load(current.getImageURL()).into(holder.imageView);
 
 
@@ -65,6 +80,8 @@ public class GamesAdapter extends RecyclerView.Adapter<com.example.thegameapp.ga
         private TextView textViewTitle;
         private TextView textViewScore;
         private ImageView imageView;
+        private TextView textViewGenre;
+        private TextView textViewReleaseDate;
 
         public GamesHolder(@NonNull View itemView) {
             super(itemView);
@@ -72,6 +89,8 @@ public class GamesAdapter extends RecyclerView.Adapter<com.example.thegameapp.ga
             textViewTitle = itemView.findViewById(R.id.game_title);
             textViewScore = itemView.findViewById(R.id.game_score);
             imageView = itemView.findViewById(R.id.game_image);
+            textViewReleaseDate = itemView.findViewById(R.id.realeaseDateTV);
+            textViewGenre = itemView.findViewById(R.id.genreTextView);
         }
 
         @Override
