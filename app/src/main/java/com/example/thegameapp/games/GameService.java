@@ -19,6 +19,6 @@ public interface GameService {
      * @return
      */
     @GET("games")
-    Call<Result> getGamesFromTimeInterval(@Query("dates")String intervalString);
+    Call<Result> getGamesFromTimeInterval(@Query("dates")String intervalString, @Query("ordering")String ordering);
 }
 

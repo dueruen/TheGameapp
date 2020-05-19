@@ -72,7 +72,7 @@
         app:layout_constraintTop_toBottomOf="@+id/metacriticScoreHeadline" />
 
     <TextView
-        android:id="@+id/publisherHeadline"
+        android:id="@+id/releaseDateHeadline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
@@ -86,19 +86,44 @@
         android:id="@+id/publisherTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="9dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="8dp"
         android:text="publisher "
-        app:layout_constraintStart_toEndOf="@+id/publisherHeadline"
+        app:layout_constraintStart_toEndOf="@+id/releaseDateHeadline"
         app:layout_constraintTop_toBottomOf="@+id/metacriticScoreTextView" />
 
     <Button
         android:id="@+id/addToFavoritesButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="37dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="5dp"
         android:text="@string/add_to_favorites_button"
-        app:layout_constraintStart_toStartOf="@+id/publisherHeadline"
-        app:layout_constraintTop_toBottomOf="@+id/publisherHeadline" />
+        app:layout_constraintStart_toEndOf="@+id/gameImage"
+        app:layout_constraintTop_toBottomOf="@+id/releaseHeadline" />
+
+    <TextView
+        android:id="@+id/releaseHeadline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/release_date_headline"
+        app:layout_constraintStart_toEndOf="@+id/gameImage"
+        app:layout_constraintTop_toBottomOf="@+id/releaseDateHeadline" />
+
+    <TextView
+        android:id="@+id/releaseDateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp"
+        android:text="release"
+        app:layout_constraintStart_toEndOf="@+id/releaseHeadline"
+        app:layout_constraintTop_toBottomOf="@+id/releaseDateHeadline" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

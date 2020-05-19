@@ -9,9 +9,10 @@
     android:layout_marginTop="8dp">
 
 match_parentmatch_parent
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="226dp">
 
         <ImageView
             android:id="@+id/game_image"
@@ -19,6 +20,9 @@ match_parentmatch_parent
             android:layout_height="150dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
             android:scaleType="fitXY"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -27,9 +31,9 @@ match_parentmatch_parent
             android:id="@+id/game_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="56dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:text="TITLE"
             android:textSize="25dp"
@@ -47,12 +51,68 @@ match_parentmatch_parent
             android:id="@+id/game_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
             android:text="SCORE"
             android:textSize="25dp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/metacriticHeadline" />
+
+        <TextView
+            android:id="@+id/metacriticHeadline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/metacritic_headline"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/game_image" />
+
+        <TextView
+            android:id="@+id/releaseDateHeadline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/release_date_headline"
+            app:layout_constraintStart_toEndOf="@+id/game_image"
+            app:layout_constraintTop_toBottomOf="@+id/game_title" />
+
+        <TextView
+            android:id="@+id/realeaseDateTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:text="RELEASED"
+            app:layout_constraintStart_toEndOf="@+id/game_image"
+            app:layout_constraintTop_toBottomOf="@+id/releaseDateHeadline" />
+
+        <TextView
+            android:id="@+id/genreHeadline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:layout_marginLeft="75dp"
+            android:layout_marginTop="20dp"
+            android:text="@string/genres_headline"
+            app:layout_constraintStart_toEndOf="@+id/releaseDateHeadline"
+            app:layout_constraintTop_toBottomOf="@+id/game_title" />
+
+        <TextView
+            android:id="@+id/genreTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="75dp"
+            android:layout_marginLeft="75dp"
+            android:layout_marginTop="5dp"
+            android:text="GENRES "
+            app:layout_constraintStart_toEndOf="@+id/releaseDateHeadline"
+            app:layout_constraintTop_toBottomOf="@+id/genreHeadline" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>
