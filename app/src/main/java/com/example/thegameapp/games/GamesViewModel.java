@@ -30,5 +30,11 @@ public class GamesViewModel extends AndroidViewModel {
         return gameRepository.getGameFromID(id);
     }
 
+    public LiveData<List<Game>> searchGameByName(String name) {
+        return gameRepository.searchGameByName(name);
+    }
+
+
+
 
 }

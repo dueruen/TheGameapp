@@ -14,19 +14,37 @@
         <action
             android:id="@+id/action_HomeFragment_to_GameDetails"
             app:destination="@id/nav_game_details" />
+        <action
+            android:id="@+id/action_HomeFragment_to_SearchResultFragment"
+            app:destination="@id/nav_search_result" />
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_search_result"
+        android:name="com.example.thegameapp.search.SearchResultFragment"
+        android:label="@string/menu_search_result"
+        tools:layout="@layout/fragment_search_result">
+
+        <action
+            android:id="@+id/action_SearchResultFragment_to_HomeFragment"
+            app:destination="@id/nav_home" />
+
+        <action
+            android:id="@+id/action_SearchResultFragment_to_GameDetails"
+            app:destination="@id/nav_game_details" />
+    </fragment>
+
     <fragment
         android:id="@+id/nav_game_details"
         android:name="com.example.thegameapp.games.GameDetailsFragment"
         android:label="@string/game_details"
         tools:layout="@layout/fragment_game_details">
         <action
-            android:id="@+id/action_HomeSecondFragment_to_HomeFragment"
+            android:id="@+id/action_GameDetailsFragment_to_HomeFragment"
             app:destination="@id/nav_home" />
-
-        <argument
-            android:name="myArg"
-            app:argType="string" />
+        <action
+            android:id="@+id/action_GameDetailsFragment_to_Search_Result"
+            app:destination="@id/nav_search_result" />
     </fragment>
 
     <fragment
@@ -36,8 +54,11 @@
         tools:layout="@layout/fragment_favorites">
 
         <action
-            android:id="@+id/action_HomeFragment_to_GameDetails"
+            android:id="@+id/action_FavoriteFragment_to_GameDetails"
             app:destination="@id/nav_game_details" />
+        <action
+            android:id="@+id/action_Favorites_to_Search_Result"
+            app:destination="@id/nav_search_result" />
     </fragment>
 
 </navigation>
