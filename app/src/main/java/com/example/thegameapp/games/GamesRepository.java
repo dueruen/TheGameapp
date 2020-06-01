@@ -43,6 +43,11 @@ public class GamesRepository {
         return this.games;
     }
 
+    public LiveData<List<Game>> searchGameByName(String name) {
+        new SearchGameByNameAsyncTask(this.api, this.games).execute(name);
+        return this.games;
+    }
+
     protected void setGames(LiveData<List<Game>> games) {
         this.games = games;
     }
@@ -74,6 +79,40 @@ public class GamesRepository {
             return null;
         }
     }
+
+
+    private class SearchGameByNameAsyncTask extends AsyncTask<String, Void, Void> {
+        private GameService api;
+        private MutableLiveData<List<Game>> liveDataList;
+        private ArrayList<Game> gameList;
+
+        private SearchGameByNameAsyncTask(GameService api, LiveData<List<Game>> liveDataList) {
+            this.api = api;
+            this.liveDataList = (MutableLiveData) liveDataList;
+            gameList = new ArrayList<>();
+            this.liveDataList.postValue(gameList);
+        }
+
+        @Override
+        protected Void doInBackground(String... name) {
+            Call<Result> r = api.searchGameByName(name[0]);
+
+            try {
+                Result fetchedResult = r.execute().body();
+                Game[] fetchedGames = fetchedResult.getGames();
+                gameList.addAll(Arrays.asList(fetchedGames));
+            }
+            catch(IOException ex) {
+                ex.printStackTrace();
+            }
+            Collections.sort(gameList);
+
+            liveDataList.postValue(gameList);
+            return null;
+        }
+    }
+
+
 
     private class GetGamesFromTimeIntervalAsyncTask extends AsyncTask<String, Void, Void> {
         private GameService api;
